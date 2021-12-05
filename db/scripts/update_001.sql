@@ -7,7 +7,7 @@ CREATE TABLE if not exists users (
 
 CREATE TABLE if not exists cars (
   id SERIAL PRIMARY KEY,
-  brand TEXT NOT NULL,
+  brandid int references carbrands(id),
   type TEXT NOT NULL,
   type photoPath
 );
@@ -20,3 +20,7 @@ CREATE TABLE if not exists advertisements (
   sold boolean NOT NULL
 );
 
+CREATE TABLE if not exists carbrands (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL UNIQUE
+);
