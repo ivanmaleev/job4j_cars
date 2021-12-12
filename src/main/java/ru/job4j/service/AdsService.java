@@ -1,0 +1,68 @@
+package ru.job4j.service;
+
+import ru.job4j.model.*;
+import ru.job4j.store.AdRepostiroty;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class AdsService {
+    public static List<Advertisement> findAds(String viewtype) {
+        if ("unsold".equalsIgnoreCase(viewtype)) {
+            return AdRepostiroty.instOf().findAllUnsoldAds();
+        } else if ("lastday".equalsIgnoreCase(viewtype)) {
+            return AdRepostiroty.instOf().findAdsLastDay();
+        } else if ("withphoto".equalsIgnoreCase(viewtype)) {
+            return AdRepostiroty.instOf().findAdsWithPhoto();
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public static List<Advertisement> findAds(String viewtype, int userid) {
+        if ("userads".equalsIgnoreCase(viewtype)) {
+            return AdRepostiroty.instOf().findAllAdsByUserId(userid);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public static Advertisement saveAd(User user, String id,
+                                       String description, String carBrandStr,
+                                       String bodyTypeStr, String fileName) {
+        Advertisement ad = AdRepostiroty.instOf().findAdById(Integer.parseInt(id));
+        if (ad != null) {
+            ad.setDescription(description);
+            Car car = ad.getCar();
+            CarBrand brand = car.getBrand();
+            if (!brand.getName().equals(carBrandStr)) {
+                CarBrand newCarBrand = new CarBrand();
+                newCarBrand.setName(carBrandStr);
+                newCarBrand = AdRepostiroty.instOf().saveCarBrand(newCarBrand);
+            }
+            car.setBodytype(BodyType.valueOf(bodyTypeStr));
+            car.setPhotoPath(fileName);
+            ad = AdRepostiroty.instOf().saveAd(ad);
+        } else {
+            Car car = new Car();
+            CarBrand brand = AdRepostiroty.instOf().findCarBrandByName(carBrandStr);
+            if (brand == null) {
+                brand = new CarBrand();
+                brand.setName(carBrandStr);
+                brand = AdRepostiroty.instOf().saveCarBrand(brand);
+            }
+            car.setBodytype(BodyType.valueOf(bodyTypeStr));
+            car.setBrand(brand);
+            car.setPhotoPath(fileName);
+            ad = new Advertisement(description, car, user);
+            ad = AdRepostiroty.instOf().saveAd(ad);
+        }
+        return ad;
+    }
+
+    public static Advertisement setSoled(String id) {
+        Advertisement ad = AdRepostiroty.instOf().findAdById(Integer.parseInt(id));
+        ad.setSold(!ad.isSold());
+        return AdRepostiroty.instOf().saveAd(ad);
+    }
+}

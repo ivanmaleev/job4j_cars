@@ -12,8 +12,6 @@ public class User {
     private String name;
     private String email;
     private String password;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Advertisement> advertisements;
 
     public int getId() {
         return id;
@@ -47,11 +45,4 @@ public class User {
         this.password = password;
     }
 
-    public List<Advertisement> getAdvertisements() {
-        return advertisements;
-    }
-
-    public void setAdvertisements(List<Advertisement> advertisements) {
-        this.advertisements = advertisements;
-    }
 }

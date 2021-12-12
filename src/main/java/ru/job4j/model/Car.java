@@ -8,10 +8,12 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @ManyToOne
-    private CarBrand brand;
+    @JoinColumn(name = "brand_id")
+    private CarBrand carBrand;
     @Enumerated(EnumType.STRING)
-    private BodyType type;
+    private BodyType bodytype;
     private String photoPath;
 
     public int getId() {
@@ -23,19 +25,19 @@ public class Car {
     }
 
     public CarBrand getBrand() {
-        return brand;
+        return carBrand;
     }
 
     public void setBrand(CarBrand brand) {
-        this.brand = brand;
+        this.carBrand = brand;
     }
 
-    public BodyType getType() {
-        return type;
+    public BodyType getBodytype() {
+        return bodytype;
     }
 
-    public void setType(BodyType type) {
-        this.type = type;
+    public void setBodytype(BodyType type) {
+        this.bodytype = type;
     }
 
     public String getPhotoPath() {

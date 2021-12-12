@@ -22,10 +22,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Объявления по продаже автомобилей</title>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="jsscripts/findads.js"></script>
+    <script src="jsscripts/finduserads.js"></script>
+    <script src="jsscripts/setsoled.js"></script>
     <script>
         $(document).ready(function () {
-            findAds();
+            let userid = <c:out value="${user.id}"/>;
+            findAds(userid);
         });
     </script>
 </head>
@@ -34,13 +36,11 @@
     <div class="row">
         <ul class="nav">
             <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/index.jsp">Главная</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/ad/edit.do">Подать новое объявление</a>
             </li>
-            <c:if test="${user != null}">
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/ad/userads.jsp">Мои объявления</a>
-                </li>
-            </c:if>
             <c:if test="${user != null}">
                 <li class="nav-item">
                     <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"><c:out value="${user.name}"/> |
@@ -54,15 +54,6 @@
             </c:if>
         </ul>
     </div>
-    <div>
-        <p>Показывать объявления:</p>
-        <label for="unsold"> Непроданные</label>
-        <input type="radio" id="unsold" name="viewtype" checked="checked" onchange="findAds()">
-        <label for="lastday"> За последний день</label>
-        <input type="radio" id="lastday" name="viewtype" onchange="findAds()">
-        <label for="withphoto"> С фото</label>
-        <input type="radio" id="withphoto" name="viewtype" onchange="findAds()">
-    </div>
     <div class="row pt-3">
         <table class="table" id="adstable">
             <thead>
@@ -71,8 +62,11 @@
                 <th scope="col">Брэнд</th>
                 <th scope="col">Тип кузова</th>
                 <th scope="col">Фото</th>
+                <th scope="col">Загрузить</th>
                 <th scope="col">Описание</th>
                 <th scope="col">Дата создания</th>
+                <th scope="col">Продано</th>
+                <th scope="col">Изменить</th>
             </tr>
             </thead>
             <tbody id="adsEl">
