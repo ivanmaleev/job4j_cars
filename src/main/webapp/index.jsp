@@ -34,7 +34,7 @@
     <div class="row">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/ad/edit.do">Подать новое объявление</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/ad/edit.jsp">Подать новое объявление</a>
             </li>
             <c:if test="${user != null}">
                 <li class="nav-item">

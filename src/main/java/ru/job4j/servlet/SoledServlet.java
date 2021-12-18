@@ -15,6 +15,6 @@ public class SoledServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        AdsService.setSoled(req.getParameter("id"));
+        AdsService.instOf().setSoled(req.getParameter("id"));
     }
 }

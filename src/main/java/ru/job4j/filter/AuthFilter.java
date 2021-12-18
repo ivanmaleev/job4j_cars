@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "*.do")
+@WebFilter(urlPatterns = "/*")
 public class AuthFilter implements Filter {
 
     @Override
@@ -16,7 +16,8 @@ public class AuthFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) sresp;
         String uri = req.getRequestURI();
         if (uri.endsWith("auth.do") || uri.endsWith("reg.do")
-                || uri.endsWith("ads.do")) {
+                || uri.endsWith("ads.do") || uri.endsWith("index.jsp")
+                || uri.endsWith("download") || uri.endsWith("login.jsp")) {
             chain.doFilter(sreq, sresp);
             return;
         }

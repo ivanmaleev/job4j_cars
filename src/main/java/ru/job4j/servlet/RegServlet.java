@@ -23,10 +23,7 @@ public class RegServlet extends HttpServlet {
         User userInDB = AdRepostiroty.instOf().findUserByEmail(email);
         if (userInDB == null) {
             HttpSession sc = req.getSession();
-            User user = new User();
-            user.setName(name);
-            user.setEmail(email);
-            user.setPassword(password);
+            User user = new User(name, email, password);
             AdRepostiroty.instOf().saveUser(user);
             sc.setAttribute("user", user);
             resp.sendRedirect(req.getContextPath() + "/index.jsp");

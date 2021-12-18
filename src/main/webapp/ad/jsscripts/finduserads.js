@@ -71,7 +71,7 @@ function findAds(userid) {
 
             td = document.createElement('td');
             href = document.createElement('a');
-            href.setAttribute('href', '/job4j_cars/ad/edit.do?id=' + ad.id);
+            href.setAttribute('href', '/job4j_cars/ad/edit.jsp?id=' + ad.id);
             td.append(href);
             img = document.createElement('i');
             img.setAttribute('class', 'fa fa-edit mr-3');

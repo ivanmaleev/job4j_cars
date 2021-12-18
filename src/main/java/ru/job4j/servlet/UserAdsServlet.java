@@ -26,7 +26,7 @@ public class UserAdsServlet extends HttpServlet {
             throws ServletException, IOException {
         String viewType = req.getParameter("viewtype");
         String userId = req.getParameter("userid");
-        List<Advertisement> ads = AdsService.findAds(viewType, Integer.parseInt(userId));
+        List<Advertisement> ads = AdsService.instOf().findAds(viewType, Integer.parseInt(userId));
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
         String json = GSON.toJson(ads);
@@ -45,7 +45,7 @@ public class UserAdsServlet extends HttpServlet {
         String carBrand = req.getParameter("carbrand");
         String bodyType = req.getParameter("bodytype");
         String fileName = "";
-        AdsService.saveAd(user, idStr, description, carBrand, bodyType, fileName);
+        AdsService.instOf().saveAd(user, idStr, description, carBrand, bodyType, fileName);
         resp.sendRedirect(req.getContextPath() + "/index.jsp");
     }
 }

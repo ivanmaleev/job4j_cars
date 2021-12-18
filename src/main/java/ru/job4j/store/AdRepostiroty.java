@@ -24,8 +24,6 @@ public class AdRepostiroty implements Store {
 
     private static String storePath;
 
-    private static final Store INSTANCE = new AdRepostiroty();
-
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure().build();
     private final SessionFactory sf = new MetadataSources(registry)
@@ -171,7 +169,6 @@ public class AdRepostiroty implements Store {
             return advertisement;
         });
     }
-
 
     @Override
     public User saveUser(User user) {

@@ -7,19 +7,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdsService {
-    public static List<Advertisement> findAds(String viewtype) {
-        if ("unsold".equalsIgnoreCase(viewtype)) {
-            return AdRepostiroty.instOf().findAllUnsoldAds();
-        } else if ("lastday".equalsIgnoreCase(viewtype)) {
-            return AdRepostiroty.instOf().findAdsLastDay();
-        } else if ("withphoto".equalsIgnoreCase(viewtype)) {
-            return AdRepostiroty.instOf().findAdsWithPhoto();
-        } else {
-            return new ArrayList<>();
-        }
+    private AdsService() {
     }
 
-    public static List<Advertisement> findAds(String viewtype, int userid) {
+    public static AdsService instOf() {
+        return Lazy.INSTANCE;
+    }
+
+    private static final class Lazy {
+        private static final AdsService INSTANCE = new AdsService();
+    }
+
+    public List<Advertisement> findAds(String viewtype) {
+        AdsDisp adsDisp = new AdsDisp();
+        adsDisp.init();
+        return adsDisp.findAds(viewtype);
+    }
+
+    public List<Advertisement> findAds(String viewtype, int userid) {
         if ("userads".equalsIgnoreCase(viewtype)) {
             return AdRepostiroty.instOf().findAllAdsByUserId(userid);
         } else {
@@ -27,9 +32,9 @@ public class AdsService {
         }
     }
 
-    public static Advertisement saveAd(User user, String id,
-                                       String description, String carBrandStr,
-                                       String bodyTypeStr, String fileName) {
+    public Advertisement saveAd(User user, String id,
+                                String description, String carBrandStr,
+                                String bodyTypeStr, String fileName) {
         Advertisement ad = AdRepostiroty.instOf().findAdById(Integer.parseInt(id));
         if (ad != null) {
             ad.setDescription(description);
@@ -60,9 +65,10 @@ public class AdsService {
         return ad;
     }
 
-    public static Advertisement setSoled(String id) {
+    public Advertisement setSoled(String id) {
         Advertisement ad = AdRepostiroty.instOf().findAdById(Integer.parseInt(id));
         ad.setSold(!ad.isSold());
         return AdRepostiroty.instOf().saveAd(ad);
     }
+
 }
