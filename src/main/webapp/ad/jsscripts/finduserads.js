@@ -1,9 +1,7 @@
 function findAds(userid) {
-    var viewtype = 'userads';
     $.ajax({
         type: 'GET',
         data: {
-            'viewtype': viewtype,
             'userid': userid
         },
         url: 'http://localhost:8080/job4j_cars/ad/userads.do',

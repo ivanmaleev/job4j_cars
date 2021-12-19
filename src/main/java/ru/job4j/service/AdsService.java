@@ -24,12 +24,8 @@ public class AdsService {
         return adsDisp.findAds(viewtype);
     }
 
-    public List<Advertisement> findAds(String viewtype, int userid) {
-        if ("userads".equalsIgnoreCase(viewtype)) {
-            return AdRepostiroty.instOf().findAllAdsByUserId(userid);
-        } else {
-            return new ArrayList<>();
-        }
+    public List<Advertisement> findAds(int userid) {
+        return AdRepostiroty.instOf().findAllAdsByUserId(userid);
     }
 
     public Advertisement saveAd(User user, String id,

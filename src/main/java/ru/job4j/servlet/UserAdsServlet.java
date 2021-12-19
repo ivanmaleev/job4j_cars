@@ -24,9 +24,8 @@ public class UserAdsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String viewType = req.getParameter("viewtype");
         String userId = req.getParameter("userid");
-        List<Advertisement> ads = AdsService.instOf().findAds(viewType, Integer.parseInt(userId));
+        List<Advertisement> ads = AdsService.instOf().findAds(Integer.parseInt(userId));
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
         String json = GSON.toJson(ads);
